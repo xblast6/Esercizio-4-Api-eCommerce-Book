@@ -113,6 +113,7 @@ function mostraLibri(data) {
     //ASIN
     let asin = document.createElement("p");
     asin.innerText = "Asin: " + libro.asin;
+    asin.classList.add("asin")
     //CONTAINER INFO CARD
     let containerInfoCard = document.createElement("div");
     containerInfoCard.classList.add("card-body");
@@ -137,8 +138,9 @@ function mostraLibri(data) {
     containerAsinCarrello.classList.add(
       "d-flex",
       "justify-content-between",
-      "align-items-start",
-      "mt-2"
+      "align-items-center",
+      "mt-4",
+      "position-relative"
     );
 
     let aggiungiCarrello = document.createElement("ion-icon");
@@ -151,7 +153,19 @@ function mostraLibri(data) {
 
       aggiungiAlCarrello(libro);
       modale.style.display = "block"
+      // Mostra il badge "checked-carrello" relativo alla card.
+    let parentCard = aggiungiCarrello.closest(".card");
+    let badge = parentCard.querySelector(".checked-carrello");
+
+    if (badge) {
+        badge.style.display = "block"; // Mostra il badge
+    }
+    modale.style.display = "block";
     });
+
+    let checkedItemAggiunto = document.createElement("ion-icon")
+    checkedItemAggiunto.name = "checkmark"
+    checkedItemAggiunto.classList.add("checked-carrello")
 
     //CREAZIONE CARTA
     containerInfoCard.appendChild(titoloCard);
@@ -163,8 +177,9 @@ function mostraLibri(data) {
     containerInfoCard.appendChild(containerPrezzoCategoria);
     containerInfoCard.appendChild(containerAsinCarrello);
     containerAsinCarrello.appendChild(asin);
+    containerAsinCarrello.appendChild(checkedItemAggiunto);
     containerAsinCarrello.appendChild(aggiungiCarrello);
-
+    
     rowCard.appendChild(card);
   });
 }
@@ -217,6 +232,11 @@ function incrementaCounter(counterElement) {
       let counter = elementoEsistente.querySelector('.container-counter-carrello .container-contatore-carrello:nth-of-type(2) p');
       incrementaCounter(counter);
       calcolaTotaleCarrello();
+      // Mostra il badge "checked-carrello"
+        let checkedItemAggiunto = elementoEsistente.querySelector('.checked-carrello');
+        if (checkedItemAggiunto) {
+            checkedItemAggiunto.style.display = "block";
+        }
     } else {
       // Altrimenti, crea un nuovo elemento nel carrello
       let containerDatiItem = document.createElement("div");
@@ -254,7 +274,18 @@ function incrementaCounter(counterElement) {
       meno.innerText = "-";
       più.innerText = "+";
       counter.innerText = "1";
-  
+
+      let cestinoCarrello = document.createElement("ion-icon")
+      cestinoCarrello.name = "trash-bin"
+      cestinoCarrello.classList.add("cestino")
+
+      cestinoCarrello.addEventListener("click", () => {
+        // Rimuovi l'elemento dal DOM
+        containerDatiItem.remove();
+        // Aggiorna il totale
+        calcolaTotaleCarrello();
+    });
+
       meno.addEventListener("click", () => decrementaCounter(counter));
       più.addEventListener("click", () => incrementaCounter(counter));
   
@@ -263,6 +294,7 @@ function incrementaCounter(counterElement) {
       containerDatiItem.appendChild(titoloCarrello);
       containerDatiItem.appendChild(prezzoCarrello);
       containerDatiItem.appendChild(containerCounterCarrello);
+      containerDatiItem.appendChild(cestinoCarrello)
       containerCounterCarrello.appendChild(containerMeno);
       containerMeno.appendChild(meno);
       containerCounterCarrello.appendChild(containerCounter);
@@ -271,6 +303,13 @@ function incrementaCounter(counterElement) {
       containerPiù.appendChild(più);
   
       calcolaTotaleCarrello();
+      let card = document.querySelector(`.card[data-asin="${libro.asin}"]`);
+        if (card) {
+            let checkedItemAggiunto = card.querySelector(".checked-carrello");
+            if (checkedItemAggiunto) {
+                checkedItemAggiunto.style.display = "block";
+            }
+        }
     }
   }
   
@@ -295,4 +334,8 @@ tastoRicerca.addEventListener("click", () => {
 chiudiCarrello.addEventListener("click", () => {
   modale.style.display = modale.style.display === "block" ? "none" : "block";
 });
+document.getElementById("carrelloNav").addEventListener("click", ()=> {
+  modale.style.display = "block"
+})
+
 });
