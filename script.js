@@ -1,13 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
-let inputRicerca = document.getElementById("inputRicerca");
-let tastoRicerca = document.getElementById("iconaRicerca");
-let baseUrl = "https://striveschool-api.herokuapp.com/books?title=";
-let containerCard = document.getElementById("containerCard");
-let containerItemCarrello = document.getElementById("containerItemCarrello");
-let modale = document.getElementById("modale")
-let chiudiCarrello = document.getElementById("chiudiCarrello")
+  let inputRicerca = document.getElementById("inputRicerca");
+  let tastoRicerca = document.getElementById("iconaRicerca");
+  let baseUrl = "https://striveschool-api.herokuapp.com/books?title=";
+  let containerCard = document.getElementById("containerCard");
+  let containerItemCarrello = document.getElementById("containerItemCarrello");
+  let modale = document.getElementById("modale");
+  let chiudiCarrello = document.getElementById("chiudiCarrello");
+  let TastoSalta = document.getElementById("TastoSalta");
+  const params = new URLSearchParams(location.search); // Ottiene i parametri dall'URL
+  const id = params.get("id"); // Estrae il valore della chiave "id"
+  console.log(id); // Mostra l'ID del libro in console
+  
 
-/* function mostraLibri(data,) {
+  /* function mostraLibri(data,) {
 
     let contatoreCard = 0
     let rowCard = document.createElement("div")
@@ -71,9 +76,10 @@ let chiudiCarrello = document.getElementById("chiudiCarrello")
 
 } */
 
-function mostraLibri(data) {
-  containerCard.innerHTML = "";
+  function mostraLibri(data) {
+    containerCard.innerHTML = "";
 
+<<<<<<< Updated upstream
   let rowCard = document.createElement("div");
   rowCard.classList.add(
     "d-flex",
@@ -120,20 +126,20 @@ function mostraLibri(data) {
     //CONTAINER PREZZO E CATEGORIA
     let containerPrezzoCategoria = document.createElement("div");
     containerPrezzoCategoria.classList.add(
+=======
+    let rowCard = document.createElement("div");
+    rowCard.classList.add(
+>>>>>>> Stashed changes
       "d-flex",
-      "justify-content-between",
-      "align-items-center",
-      "mt-2"
+      "flex-row",
+      "flex-wrap",
+      "justify-content-start",
+      "align-items-stretch",
+      "gap-3"
     );
-    //PREZZO
-    let prezzoCard = document.createElement("p");
-    prezzoCard.classList.add("prezzo-card");
-    prezzoCard.innerText = `€ ${libro.price.toFixed(2)}`;
-    //CATEGORIA
-    let categoriaCard = document.createElement("p");
-    categoriaCard.classList.add("categoria-card");
-    categoriaCard.innerText = libro.category;
+    containerCard.appendChild(rowCard);
 
+<<<<<<< Updated upstream
     let containerAsinCarrello = document.createElement("div");
     containerAsinCarrello.classList.add(
       "d-flex",
@@ -142,15 +148,67 @@ function mostraLibri(data) {
       "mt-4",
       "position-relative"
     );
+=======
+    data.forEach((libro) => {
+      //CARD
+      let card = document.createElement("div");
+      card.classList.add(
+        "card",
+        "flex-grow-1",
+        "col-lg-3",
+        "col-md-4",
+        "col-sm-6",
+        "h-100"
+      );
+>>>>>>> Stashed changes
 
-    let aggiungiCarrello = document.createElement("ion-icon");
-    aggiungiCarrello.name = "cart";
-    aggiungiCarrello.classList.add("fs-3", "cursor-pointer");
-    aggiungiCarrello.id = "aggiungiCarrello";
+      //TITOLO CARD
+      let titoloCard = document.createElement("p");
+      titoloCard.classList.add("titolo-card");
+      titoloCard.innerText = libro.title;
+      titoloCard.title = libro.title;
+      //CONTAINER IMG
+      let containerImgCard = document.createElement("div");
+      containerImgCard.classList.add("container-img-card");
+      //IMG
+      let imgCard = document.createElement("img");
+      imgCard.classList.add("card-img-top");
+      imgCard.src = libro.img;
+      imgCard.alt = libro.title;
+      //ASIN
+      let asin = document.createElement("p");
+      asin.innerText = "Asin: " + libro.asin;
+      asin.classList.add("asin");
+      //CONTAINER INFO CARD
+      let containerInfoCard = document.createElement("div");
+      containerInfoCard.classList.add("card-body");
+      //CONTAINER PREZZO E CATEGORIA
+      let containerPrezzoCategoria = document.createElement("div");
+      containerPrezzoCategoria.classList.add(
+        "d-flex",
+        "justify-content-between",
+        "align-items-center",
+        "mt-2"
+      );
+      //PREZZO
+      let prezzoCard = document.createElement("p");
+      prezzoCard.classList.add("prezzo-card");
+      prezzoCard.innerText = `€ ${libro.price.toFixed(2)}`;
+      //CATEGORIA
+      let categoriaCard = document.createElement("p");
+      categoriaCard.classList.add("categoria-card");
+      categoriaCard.innerText = libro.category;
 
-    aggiungiCarrello.addEventListener("click", () => {
-      // Chiama la funzione `aggiungiAlCarrello` e le passa l'oggetto libro.
+      let containerAsinCarrello = document.createElement("div");
+      containerAsinCarrello.classList.add(
+        "d-flex",
+        "justify-content-between",
+        "align-items-center",
+        "mt-4",
+        "position-relative"
+      );
 
+<<<<<<< Updated upstream
       aggiungiAlCarrello(libro);
       modale.style.display = "block"
       // Mostra il badge "checked-carrello" relativo alla card.
@@ -161,8 +219,74 @@ function mostraLibri(data) {
         badge.style.display = "block"; // Mostra il badge
     }
     modale.style.display = "block";
-    });
+=======
+      let aggiungiCarrello = document.createElement("ion-icon");
+      aggiungiCarrello.name = "cart";
+      aggiungiCarrello.classList.add("fs-3", "cursor-pointer");
+      aggiungiCarrello.id = "aggiungiCarrello";
 
+      aggiungiCarrello.addEventListener("click", () => {
+        // Chiama la funzione `aggiungiAlCarrello` e le passa l'oggetto libro.
+
+        aggiungiAlCarrello(libro);
+        modale.style.display = "block";
+        // Mostra il badge "checked-carrello" relativo alla card.
+        let parentCard = aggiungiCarrello.closest(".card");
+        let badge = parentCard.querySelector(".checked-carrello");
+
+        if (badge) {
+          badge.style.display = "block"; // Mostra il badge
+        }
+        modale.style.display = "block";
+      });
+
+      let containerDettagli = document.createElement("div");
+      containerDettagli.classList.add("container-dettagli");
+
+      let dettagli = document.createElement("p");
+      dettagli.classList.add("dettagli");
+      dettagli.innerText = "Più dettagli";
+      let salta = document.createElement("p");
+      salta.classList.add("tasto-salta");
+      salta.innerText = "salta";
+      salta.id = "TastoSalta";
+
+      salta.addEventListener("click", () => {
+        card.style.display = "none"; // Nasconde la card
+      });
+
+      dettagli.addEventListener("click", () => {
+        // Creiamo il link con l'ASIN come parametro
+        window.location.href = `dettagli.html?id=${libro.asin}`;
+      });
+
+      let checkedItemAggiunto = document.createElement("ion-icon");
+      checkedItemAggiunto.name = "checkmark";
+      checkedItemAggiunto.classList.add("checked-carrello");
+
+      //CREAZIONE CARTA
+      containerInfoCard.appendChild(titoloCard);
+      containerPrezzoCategoria.appendChild(prezzoCard);
+      containerPrezzoCategoria.appendChild(categoriaCard);
+
+      containerDettagli.appendChild(dettagli);
+      containerDettagli.appendChild(salta);
+
+      card.appendChild(imgCard);
+      card.appendChild(containerInfoCard);
+      card.appendChild(containerDettagli);
+      containerInfoCard.appendChild(containerPrezzoCategoria);
+      containerInfoCard.appendChild(containerAsinCarrello);
+      containerAsinCarrello.appendChild(asin);
+      containerAsinCarrello.appendChild(checkedItemAggiunto);
+      containerAsinCarrello.appendChild(aggiungiCarrello);
+
+      rowCard.appendChild(card);
+>>>>>>> Stashed changes
+    });
+  }
+
+<<<<<<< Updated upstream
     let checkedItemAggiunto = document.createElement("ion-icon")
     checkedItemAggiunto.name = "checkmark"
     checkedItemAggiunto.classList.add("checked-carrello")
@@ -185,6 +309,9 @@ function mostraLibri(data) {
 }
 
 function troncaTitolo(titolo, lunghezzaMax) {
+=======
+  function troncaTitolo(titolo, lunghezzaMax) {
+>>>>>>> Stashed changes
     lunghezzaMax = 25;
     if (titolo.length > lunghezzaMax) {
       return titolo.slice(0, lunghezzaMax) + "...";
@@ -194,12 +321,12 @@ function troncaTitolo(titolo, lunghezzaMax) {
   }
 
   // Funzione per incrementare il contatore
-function incrementaCounter(counterElement) {
+  function incrementaCounter(counterElement) {
     let valoreAttuale = parseInt(counterElement.innerText);
     counterElement.innerText = valoreAttuale + 1;
     calcolaTotaleCarrello();
   }
-  
+
   // Funzione per decrementare il contatore
   function decrementaCounter(counterElement) {
     let valoreAttuale = parseInt(counterElement.innerText);
@@ -208,66 +335,82 @@ function incrementaCounter(counterElement) {
       calcolaTotaleCarrello();
     }
   }
-  
+
   // Funzione per calcolare il totale del carrello
   function calcolaTotaleCarrello() {
     let elementiCarrello = document.querySelectorAll(".container-dati-item");
     let totale = 0;
-    elementiCarrello.forEach(item => {
-      let prezzo = parseFloat(item.querySelector('p:nth-of-type(2)').innerText); // Assumendo che il secondo p sia il prezzo
-      let quantita = parseInt(item.querySelector('.container-contatore-carrello:nth-of-type(2) p').innerText); // Assumendo la struttura attuale, potrai aggiustare i selettori in base all'HTML finale.
+    elementiCarrello.forEach((item) => {
+      let prezzo = parseFloat(item.querySelector("p:nth-of-type(2)").innerText); // Assumendo che il secondo p sia il prezzo
+      let quantita = parseInt(
+        item.querySelector(".container-contatore-carrello:nth-of-type(2) p")
+          .innerText
+      ); // Assumendo la struttura attuale, potrai aggiustare i selettori in base all'HTML finale.
       totale += prezzo * quantita;
     });
-    document.getElementById("totaleCarrello").innerText = totale.toFixed(2) + " €";
+    document.getElementById("totaleCarrello").innerText =
+      totale.toFixed(2) + " €";
   }
 
   function aggiungiAlCarrello(libro) {
     // Prima di creare un nuovo elemento, controlla se esiste già un articolo con lo stesso asin nel carrello
-    let elementoEsistente = Array.from(document.querySelectorAll('.container-dati-item')).find(item => {
+    let elementoEsistente = Array.from(
+      document.querySelectorAll(".container-dati-item")
+    ).find((item) => {
       return item.dataset.asin === libro.asin;
     });
-  
+
     if (elementoEsistente) {
       // Se l'elemento esiste già, incrementa semplicemente il counter
-      let counter = elementoEsistente.querySelector('.container-counter-carrello .container-contatore-carrello:nth-of-type(2) p');
+      let counter = elementoEsistente.querySelector(
+        ".container-counter-carrello .container-contatore-carrello:nth-of-type(2) p"
+      );
       incrementaCounter(counter);
       calcolaTotaleCarrello();
       // Mostra il badge "checked-carrello"
+<<<<<<< Updated upstream
         let checkedItemAggiunto = elementoEsistente.querySelector('.checked-carrello');
         if (checkedItemAggiunto) {
             checkedItemAggiunto.style.display = "block";
         }
+=======
+      let checkedItemAggiunto =
+        elementoEsistente.querySelector(".checked-carrello");
+      if (checkedItemAggiunto) {
+        checkedItemAggiunto.style.display = "block";
+      }
+>>>>>>> Stashed changes
     } else {
       // Altrimenti, crea un nuovo elemento nel carrello
       let containerDatiItem = document.createElement("div");
       containerDatiItem.classList.add("container-dati-item");
       // Aggiungiamo l'asin come attributo data per identificarlo facilmente
       containerDatiItem.dataset.asin = libro.asin;
-  
+
       let imgCarrello = document.createElement("img");
       imgCarrello.src = libro.img;
       imgCarrello.alt = libro.title;
       imgCarrello.classList.add("img-carrello");
-  
+
       let titoloCarrello = document.createElement("p");
-      titoloCarrello.innerText = troncaTitolo(libro.title, 15)
-      titoloCarrello.title = libro.title
-  
+      titoloCarrello.innerText = troncaTitolo(libro.title, 15);
+      titoloCarrello.title = libro.title;
+
       let prezzoCarrello = document.createElement("p");
       prezzoCarrello.innerText = libro.price.toFixed(2) + " €";
-  
+
       let containerCounterCarrello = document.createElement("div");
-      containerCounterCarrello.classList.add("container-counter-carrello")
-  
+      containerCounterCarrello.classList.add("container-counter-carrello");
+
       let containerMeno = document.createElement("div");
-      containerMeno.classList.add("container-contatore-carrello")
-      containerMeno.id = "meno"
+      containerMeno.classList.add("container-contatore-carrello");
+      containerMeno.id = "meno";
       let containerCounter = document.createElement("div");
-      containerCounter.classList.add("container-contatore-carrello")
+      containerCounter.classList.add("container-contatore-carrello");
       let containerPiù = document.createElement("div");
-      containerPiù.classList.add("container-contatore-carrello")
-      containerPiù.id = "più"
-  
+      containerPiù.classList.add("container-contatore-carrello");
+      containerPiù.id = "più";
+
       let meno = document.createElement("p");
       let più = document.createElement("p");
       let counter = document.createElement("p");
@@ -275,61 +418,107 @@ function incrementaCounter(counterElement) {
       più.innerText = "+";
       counter.innerText = "1";
 
+<<<<<<< Updated upstream
       let cestinoCarrello = document.createElement("ion-icon")
       cestinoCarrello.name = "trash-bin"
       cestinoCarrello.classList.add("cestino")
+=======
+      let cestinoCarrello = document.createElement("ion-icon");
+      cestinoCarrello.name = "trash-bin";
+      cestinoCarrello.classList.add("cestino");
+>>>>>>> Stashed changes
 
       cestinoCarrello.addEventListener("click", () => {
         // Rimuovi l'elemento dal DOM
         containerDatiItem.remove();
         // Aggiorna il totale
         calcolaTotaleCarrello();
+<<<<<<< Updated upstream
     });
+=======
+      });
+>>>>>>> Stashed changes
 
       meno.addEventListener("click", () => decrementaCounter(counter));
       più.addEventListener("click", () => incrementaCounter(counter));
-  
+
       containerItemCarrello.appendChild(containerDatiItem);
       containerDatiItem.appendChild(imgCarrello);
       containerDatiItem.appendChild(titoloCarrello);
       containerDatiItem.appendChild(prezzoCarrello);
       containerDatiItem.appendChild(containerCounterCarrello);
+<<<<<<< Updated upstream
       containerDatiItem.appendChild(cestinoCarrello)
+=======
+      containerDatiItem.appendChild(cestinoCarrello);
+>>>>>>> Stashed changes
       containerCounterCarrello.appendChild(containerMeno);
       containerMeno.appendChild(meno);
       containerCounterCarrello.appendChild(containerCounter);
       containerCounter.appendChild(counter);
       containerCounterCarrello.appendChild(containerPiù);
       containerPiù.appendChild(più);
-  
+
       calcolaTotaleCarrello();
       let card = document.querySelector(`.card[data-asin="${libro.asin}"]`);
+<<<<<<< Updated upstream
         if (card) {
             let checkedItemAggiunto = card.querySelector(".checked-carrello");
             if (checkedItemAggiunto) {
                 checkedItemAggiunto.style.display = "block";
             }
         }
+=======
+      if (card) {
+        let checkedItemAggiunto = card.querySelector(".checked-carrello");
+        if (checkedItemAggiunto) {
+          checkedItemAggiunto.style.display = "block";
+        }
+      }
+>>>>>>> Stashed changes
     }
   }
-  
 
-tastoRicerca.addEventListener("click", () => {
-  let query = inputRicerca.value.toLowerCase();
-  let url = baseUrl + query;
-  console.log(url);
+  tastoRicerca.addEventListener("click", () => {
+    let query = inputRicerca.value.toLowerCase();
+    let url = baseUrl + query;
+    console.log(url);
 
-  containerCard.innerHTML = "";
+    containerCard.innerHTML = "";
 
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      mostraLibri(data), console.log(data);
-    })
-    .catch((err) => console.log("Errore: ", err));
-  document.getElementById("inputRicerca").value = "";
-  document.getElementById("containerCard").value = "";
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        mostraLibri(data), console.log(data);
+      })
+      .catch((err) => console.log("Errore: ", err));
+    document.getElementById("inputRicerca").value = "";
+    document.getElementById("containerCard").value = "";
+  });
+
+  chiudiCarrello.addEventListener("click", () => {
+    modale.style.display = modale.style.display === "block" ? "none" : "block";
+  });
+  document.getElementById("carrelloNav").addEventListener("click", () => {
+    modale.style.display = "block";
+  });
+
+  if (id) {
+    const baseUrl = "https://striveschool-api.herokuapp.com/books/";
+    fetch(`${baseUrl}${id}`)
+        .then(response => response.json())
+        .then(libro => {
+            // Mostra i dettagli nella pagina
+            document.querySelector("#titolo-libro-dettaglio").innerText = "Titolo: " + libro.title;
+            document.querySelector(".container-struttura-dettagli img").src = libro.img;
+            document.querySelector("#categoria-dettagli").innerText = "Categoria: " + libro.category;
+            document.querySelector("#prezzo-dettagli").innerText = "Prezzo: " + libro.price + "€";
+        })
+        .catch(error => console.error("Errore nel caricamento dei dettagli:", error));
+}
+
 });
+<<<<<<< Updated upstream
 
 chiudiCarrello.addEventListener("click", () => {
   modale.style.display = modale.style.display === "block" ? "none" : "block";
@@ -339,3 +528,5 @@ document.getElementById("carrelloNav").addEventListener("click", ()=> {
 })
 
 });
+=======
+>>>>>>> Stashed changes
